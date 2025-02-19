@@ -45,7 +45,7 @@
                         displayMode="multi"
                         fragmentPath="/content/dam/aem-web/contentmodel/munu"
                         paragraphScope="all"
-                        text="Munu Title Munu Description Jena isMale false extra spider man"
+                        text="Munu Title Munu Description Jena cf-field /content/dam/aem-web/contentmodel/swarup isMale false extra spider man"
                         variationName="master"/>
                 </container>
             </container>
