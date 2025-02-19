@@ -22,9 +22,7 @@ import java.util.List;
 @SlingServletResourceTypes(
         resourceTypes = "aem-web/components/page",
                 selectors = {"model"},
-
-        extensions = "json"
-)
+                extensions = "json")
 public class ContentFragmentJsonServlet extends SlingAllMethodsServlet {
 
    JsonObject jsonPath= new JsonObject();
@@ -55,7 +53,6 @@ protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse r
             }
         }
     }
-
     jsonResponse.add(":items", items);
     jsonResponse.add(":path", jsonPath);
     response.setContentType("application/json");
@@ -90,7 +87,6 @@ private JsonObject processFragment(ContentFragment fragment, ResourceResolver re
             }
         }
     }
-
     // Only add elements if there are valid fields inside
     if (elements.size() > 0) {
         elements.addProperty("fragmentPath", fragment.adaptTo(Resource.class).getPath());
@@ -99,9 +95,6 @@ private JsonObject processFragment(ContentFragment fragment, ResourceResolver re
 
     return fragmentJson;
 }
-
-
-
     private void collectFragmentPaths(Resource resource) {
 
         if (resource.getValueMap().containsKey("fragmentPath")) {
@@ -112,13 +105,4 @@ private JsonObject processFragment(ContentFragment fragment, ResourceResolver re
             collectFragmentPaths(child);  // Recursive call for all nested children
         }
     }
-
-
-
-   
-
-
-
-
-
 }
