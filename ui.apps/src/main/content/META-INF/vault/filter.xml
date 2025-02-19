@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/aem-web/clientlibs"/>
+    <filter root="/apps/aem-web/components"/>
+    <filter root="/apps/aem-web/i18n"/>
+    <filter root="/apps/msm/aem-web_blueprint" mode="merge"/>
+</workspaceFilter>

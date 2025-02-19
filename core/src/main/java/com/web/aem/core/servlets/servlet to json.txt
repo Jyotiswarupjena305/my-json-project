@@ -1,0 +1,74 @@
+import com.adobe.cq.dam.cfm.ContentElement;
+import com.adobe.cq.dam.cfm.ContentFragment;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.apache.sling.models.factory.ModelFactory;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_RESOURCE_TYPES;
+import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_SELECTORS;
+import static org.apache.sling.api.servlets.ServletResolverConstants.SLING_SERVLET_EXTENSIONS;
+
+@Component(service = Servlet.class,
+        property = {
+                SLING_SERVLET_RESOURCE_TYPES + "=aem-web/components/page",
+                SLING_SERVLET_SELECTORS + "=model",
+                SLING_SERVLET_EXTENSIONS + "=dtv.json"
+        })
+public class ContentFragmentJsonServlet extends SlingAllMethodsServlet {
+
+    @Reference
+    private ModelFactory modelFactory;
+
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        String pagePath = request.getRequestPathInfo().getResourcePath();
+        Resource pageResource = request.getResourceResolver().getResource(pagePath);
+
+        if (pageResource == null) {
+            response.sendError(SlingHttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        Map<String, Object> jsonOutput = new HashMap<>();
+        Map<String, Object> items = new HashMap<>();
+
+        Iterator<Resource> children = pageResource.listChildren();
+
+        while (children.hasNext()) {
+            Resource child = children.next();
+            if (child.isResourceType("dam/cfm/components/contentfragment")) {
+                ContentFragment contentFragment = child.adaptTo(ContentFragment.class);
+                if (contentFragment != null) {
+                    Map<String, Object> fragmentMap = new HashMap<>();
+                    fragmentMap.put("title", contentFragment.getTitle());
+
+                    Map<String, Object> elementsMap = new HashMap<>();
+                    Iterator<ContentElement> elements = contentFragment.getElements();
+                    while (elements.hasNext()) {
+                        ContentElement element = elements.next();
+                        elementsMap.put(element.getName(), element.getContent());
+                    }
+
+                    fragmentMap.put("elements", elementsMap);
+                    items.put(contentFragment.getName(), fragmentMap);
+                }
+            }
+        }
+
+        jsonOutput.put(":items", items);
+
+        response.setContentType("application/json");
+        response.getWriter().write(new com.google.gson.Gson().toJson(jsonOutput));
+    }
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2025-02-17T23:53:53.870+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/aem-web/settings/wcm/templates/page-content"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="contentfragment"
+        sling:resourceType="aem-web/components/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="aem-web/components/container"
+            layout="responsiveGrid">
+            <container
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="aem-web/components/container"
+                layout="responsiveGrid">
+                <title
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="aem-web/components/title"/>
+                <container
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="aem-web/components/container"
+                    layout="responsiveGrid">
+                    <contentfragment
+                        jcr:created="{Date}2025-02-14T16:43:18.603+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2025-02-14T16:43:32.091+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="aem-web/components/contentfragment"
+                        displayMode="multi"
+                        fragmentPath="/content/dam/aem-web/contentmodel/jyoti"
+                        paragraphScope="all"
+                        text="JYOTI Title Jyotiswarup jena Description Jyotiswarup Jena appears to be a professional primarily based in Odisha, India, most likely working in the IT sector, specifically as an Adobe Certified AEM Developer, with a profile readily visible on LinkedIn, indicating experience at companies like Cognizant and likely connections to the Cognizant College of Engineering and Technology in Bhubaneswar. isMale true extra Iron man"
+                        variationName="master"/>
+                    <contentfragment_copy
+                        jcr:created="{Date}2025-02-14T16:43:18.603+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2025-02-15T03:03:51.742+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="aem-web/components/contentfragment"
+                        displayMode="multi"
+                        fragmentPath="/content/dam/aem-web/contentmodel/munu"
+                        paragraphScope="all"
+                        text="Munu Title Munu Description Jena isMale false extra spider man"
+                        variationName="master"/>
+                </container>
+            </container>
+        </root>
+    </jcr:content>
+</jcr:root>
