@@ -1,28 +1,10 @@
-/*
- *  Copyright 2015 Adobe Systems Incorporated
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.web.aem.core.servlets;
 
-import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.servlets.HttpConstants;
-import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
+import org.apache.sling.api.servlets.HttpConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.propertytypes.ServiceDescription;
 
@@ -32,15 +14,15 @@ import java.io.IOException;
 
 /**
  * Servlet that writes some sample content into the response. It is mounted for
- * all resources of a specific Sling resource type. The
- * {@link SlingSafeMethodsServlet} shall be used for HTTP methods that are
- * idempotent. For write operations use the {@link SlingAllMethodsServlet}.
+ * all resources of a specific Sling resource type. 
  */
 @Component(service = { Servlet.class })
 @SlingServletResourceTypes(
         resourceTypes="aem-web/components/page",
-        methods=HttpConstants.METHOD_GET
-        )
+        methods=HttpConstants.METHOD_GET,
+        selectors="hello",
+        extensions="html"
+)
 @ServiceDescription("Simple Demo Servlet")
 public class SimpleServlet extends SlingSafeMethodsServlet {
 
@@ -49,8 +31,16 @@ public class SimpleServlet extends SlingSafeMethodsServlet {
     @Override
     protected void doGet(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
-        final Resource resource = req.getResource();
+        
+        // Disable any decoration by setting response headers
+        resp.setHeader("X-Content-Decoration", "none");
+        
+        // Disable cache and further response processing
+        resp.setHeader("Cache-Control", "no-store");
+        resp.setHeader("Pragma", "no-cache");
+        
+        // Avoid any default decoration of the response
         resp.setContentType("text/plain");
-        resp.getWriter().write("Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE)+"Jyotiswarup Jena");
+        resp.getWriter().write("Jyotiswarup Jena");
     }
 }
